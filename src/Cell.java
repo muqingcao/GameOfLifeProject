@@ -32,9 +32,23 @@ public class Cell {
     public void setStatus(boolean status) {
         this.alive = status;
     }
+    
     public void switchState() {
         if (this.alive) this.alive = false;
         else this.alive = true;
+    }
+    
+    public void setAlive(boolean alive){
+        this.alive = alive;
+    }
+    
+    public String toString(){
+        if(alive == true){
+            return "1";
+        }else{
+            return "0";
+        }
+
     }
 
     // // count the number of alive neighbors
