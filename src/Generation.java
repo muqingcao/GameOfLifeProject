@@ -14,6 +14,7 @@ public class Generation {
         this.oldGird = board.getGrid();
         newGird = new Cell[board.getSize()][board.getSize()];
 
+
     }
 
     public void newGeneration(){
@@ -48,8 +49,8 @@ public class Generation {
                     newGird[i][j].switchState();
 
                 }
-                
-                
+
+
                 // situation 3: a new cell born in an empty cell that has exactly 3 neighbours
                 else if(neighbours == 3 && oldGird[i][j].isAlive() == false){
                     newGird[i][j].switchState();
@@ -57,7 +58,7 @@ public class Generation {
 
 
                 }
-                
+
             }
         }
 
