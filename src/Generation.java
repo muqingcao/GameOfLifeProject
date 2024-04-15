@@ -4,18 +4,22 @@ public class Generation {
     private Cell[][] oldGird;
     private int size;
 
-    private Cell[][] nextGird;
+    private Cell[][] newGird;
+    private GameBoard nextGird;
 
 
     // new game board
     public Generation(GameBoard board){
         this.size = board.getSize();
         this.oldGird = board.getGrid();
+        newGird = new Cell[board.getSize()][board.getSize()];
+
     }
 
-    public void NewGeneration(){
+    public void newGeneration(){
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
+
                 // step one: find the number of neighbours
                 // column(k): i - 1 & i+1; row(h): j - 1 & j+1
                 int neighbours = 0;
@@ -29,42 +33,45 @@ public class Generation {
 
                     }
                 }
-                neighbours -= 1;
+                if(oldGird[i][j].isAlive()){
+                    neighbours -=1;
+                }
+
+                // set new Board
+                Cell temp = new Cell(nextGird, i,j);
+                temp.setAlive(oldGird[i][j].isAlive());
+                newGird[i][j] = temp;
 
                 // situation 1: if the cell will die in the next generation (more than 3 neighbours  or less than 2 neighbours)
                 if((neighbours > 3 || neighbours < 2 ) && oldGird[i][j].isAlive() == true){
-                    oldGird[i][j].switchState();
-                    nextGird[i][j] = oldGird[i][j];
+                    System.out.println("i" + i + "\t,"+ "j: "+j);
+                    newGird[i][j].switchState();
 
                 }
-
-
+                
+                
                 // situation 3: a new cell born in an empty cell that has exactly 3 neighbours
                 else if(neighbours == 3 && oldGird[i][j].isAlive() == false){
-                    oldGird[i][j].switchState();
-                    nextGird[i][j] = oldGird[i][j];
+                    newGird[i][j].switchState();
+                    //System.out.println("i" + i + "\t,"+ "j: "+j);
+
 
                 }
-                // situation 4: alive in the next situtaion
-                else if((neighbours == 3 || neighbours == 2) && oldGird[i][j].isAlive() == true){
-                    nextGird[i][j] = oldGird[i][j];
-                }
-
-                //  no change
-                else{
-                    nextGird[i][j] = oldGird[i][j];
-                }
-
+                
             }
         }
 
     }
+    public GameBoard getNewBoard(){
+        nextGird = new GameBoard(this.newGird);
+        return nextGird;
+    }
 
+    public int getSize(){
+        return size;
+    }
 
-
-
-
-
-
-
+    public Cell[][] getNewGird() {
+        return newGird;
+    }
 }
