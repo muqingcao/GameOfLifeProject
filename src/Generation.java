@@ -45,7 +45,6 @@ public class Generation {
 
                 // situation 1: if the cell will die in the next generation (more than 3 neighbours  or less than 2 neighbours)
                 if((neighbours > 3 || neighbours < 2 ) && oldGird[i][j].isAlive() == true){
-                    System.out.println("i" + i + "\t,"+ "j: "+j);
                     newGird[i][j].switchState();
 
                 }
