@@ -1,7 +1,10 @@
+package model;
+
 public class GameBoard {
     // 2 dimensional array
     private Cell[][] grid;
-    // the length size of the game board
+
+    // the side length of the game board
     private int size;
 
     public GameBoard(int size) {
@@ -20,5 +23,14 @@ public class GameBoard {
     public Cell[][] getGrid() {
         return grid;
     }
-
+    public void update() {
+        // call the function in model.GameLogic to update the gameBoard
+    }
+    public void reset() {
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                this.getGrid()[i][j].setStatus(false);
+            }
+        }
+    }
 }
