@@ -1,5 +1,3 @@
-package model;
-
 public class Cell {
     // the position in a game board
     private int x, y;
