@@ -37,19 +37,19 @@ public class Cell {
         else this.alive = true;
     }
 
-    // count the number of alive neighbors
-    public int countNeighbors(GameBoard gameBoard) {
-        int boardSideLength = gameBoard.getSize();
-        int[][] calculateNeighbor
-                = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        int count = 0;
-        for (int i = 0; i < 4; i++) {
-            int neighborX = this.x + calculateNeighbor[i][0];
-            int neighborY = this.y + calculateNeighbor[i][1];
-            if ((neighborX < boardSideLength && neighborX >= 0)
-                    && (neighborY < boardSideLength && neighborY >= 0)
-                    && (gameBoard.getGrid()[neighborX][neighborY]).isAlive()) count++;
-        }
-        return count;
-    }
+    // // count the number of alive neighbors
+    // public int countNeighbors(GameBoard gameBoard) {
+    //     int boardSideLength = gameBoard.getSize();
+    //     int[][] calculateNeighbor
+    //             = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    //     int count = 0;
+    //     for (int i = 0; i < 4; i++) {
+    //         int neighborX = this.x + calculateNeighbor[i][0];
+    //         int neighborY = this.y + calculateNeighbor[i][1];
+    //         if ((neighborX < boardSideLength && neighborX >= 0)
+    //                 && (neighborY < boardSideLength && neighborY >= 0)
+    //                 && (gameBoard.getGrid()[neighborX][neighborY]).isAlive()) count++;
+    //     }
+    //     return count;
+    // }
 }
