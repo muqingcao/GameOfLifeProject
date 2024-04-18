@@ -1,13 +1,10 @@
-import java.util.Arrays;
+package model;
 
 public class GameLogic {
     private GameBoard board;
-    private GameBoard newboard;
-
+    private GameBoard newBoard;
     private GameBoard boardPrev;
     private GameBoard boardCurr;
-
-
 
     public GameLogic(GameBoard board){
         // initial game: all cells are die
@@ -22,7 +19,7 @@ public class GameLogic {
     public void getNextBoard(){
         Generation nextGen = new Generation(board);
         nextGen.newGeneration();
-        newboard  = nextGen.getNewBoard();
+        newBoard  = nextGen.getNewBoard();
     }
 
     public void newBoardContinue(){
@@ -38,11 +35,10 @@ public class GameLogic {
             curr = this.boardCurr.toString();
             boardPrev = boardCurr;
         }
-
     }
 
-    public GameBoard getNewboard(){
-        return newboard;
+    public GameBoard getNewBoard(){
+        return newBoard;
     }
 
     public GameBoard getBoard(){
@@ -52,9 +48,8 @@ public class GameLogic {
     public GameBoard getBoardCurr(){
         return boardCurr;
     }
+
     public GameBoard getBoardPrev(){
         return boardPrev;
     }
-
-
 }

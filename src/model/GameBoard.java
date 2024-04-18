@@ -1,3 +1,5 @@
+package model;
+
 public class GameBoard {
     // 2 dimensional array
     private Cell[][] grid;
@@ -23,8 +25,6 @@ public class GameBoard {
         grid[cell.getX()][cell.getY()] = cell;
     }
 
-
-
     public void cellChangeState(int x, int y){
         grid[x][y].switchState();
     }
@@ -34,6 +34,14 @@ public class GameBoard {
     }
     public Cell[][] getGrid() {
         return grid;
+    }
+
+    public void reset() {
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                this.getGrid()[i][j].setStatus(false);
+            }
+        }
     }
 
     public String toString(){

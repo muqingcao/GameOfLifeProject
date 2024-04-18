@@ -1,9 +1,10 @@
+package model;
+
 public class Generation {
 
     // old game board
     private Cell[][] oldGird;
     private int size;
-
     private Cell[][] newGird;
     private GameBoard nextGird;
 
@@ -13,8 +14,6 @@ public class Generation {
         this.size = board.getSize();
         this.oldGird = board.getGrid();
         newGird = new Cell[board.getSize()][board.getSize()];
-
-
     }
 
     public void newGeneration(){
@@ -31,7 +30,6 @@ public class Generation {
                                 neighbours += 1;
                             }
                         }
-
                     }
                 }
                 if(oldGird[i][j].isAlive()){
@@ -46,21 +44,15 @@ public class Generation {
                 // situation 1: if the cell will die in the next generation (more than 3 neighbours  or less than 2 neighbours)
                 if((neighbours > 3 || neighbours < 2 ) && oldGird[i][j].isAlive() == true){
                     newGird[i][j].switchState();
-
                 }
-
 
                 // situation 3: a new cell born in an empty cell that has exactly 3 neighbours
                 else if(neighbours == 3 && oldGird[i][j].isAlive() == false){
                     newGird[i][j].switchState();
                     //System.out.println("i" + i + "\t,"+ "j: "+j);
-
-
                 }
-
             }
         }
-
     }
     public GameBoard getNewBoard(){
         nextGird = new GameBoard(this.newGird);
