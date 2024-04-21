@@ -11,9 +11,14 @@ public class GameLogic {
         this.board = board;
     }
 
+    // the method is designed for using location to change the cell status
     public void addCell(int x, int y){
-        // user click cell and change the cell status
         this.board.cellChangeState(x,y);
+    }
+
+    // the method is designed for using cell object to change the cell status
+    public void addCell(Cell cell){
+        this.board.cellChangeState(cell.getX(),cell.getY());
     }
 
     public void getNextBoard(){

@@ -19,9 +19,9 @@ public class Main {
         GameBoard board = new GameBoard(8);
         GameLogic game = new GameLogic(board);
 
-        game.addCell(1,1);
-        game.addCell(1,2);
-        game.addCell(1,3);
+        game.addCell(1, 1);
+        game.addCell(1, 2);
+        game.addCell(1, 3);
         System.out.print(game.getBoard().toString());
         System.out.print("------\n");
         game.getNextBoard();
@@ -40,6 +40,8 @@ public class Main {
         System.out.print("------\n");
         game1.getNextBoard();
         System.out.print(game1.getNewBoard().toString());
+        // print every generation
+        game1.newBoardContinue();
         */
     }
 }
