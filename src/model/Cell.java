@@ -4,9 +4,6 @@ public class Cell {
     // the position in a game board
     private int x, y;
 
-    // the side length of a cell
-    private int size;
-
     // if the cell is alive
     private boolean alive;
 
@@ -25,14 +22,8 @@ public class Cell {
     public int getY() {
         return y;
     }
-    public int getSize() {
-        return size;
-    }
     public boolean isAlive() {
         return alive;
-    }
-    public void setStatus(boolean status) {
-        this.alive = status;
     }
     
     public void switchState() {

@@ -2,17 +2,36 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+
+import control.ControlPanel;
 import model.*;
 
 public class GameFrame extends JFrame {
     private GamePanel gamePanel;
+    private ControlPanel controlPanel;
+
     public GameFrame(GameBoard gameBoard, GameLogic gameLogic) {
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //sets the layout manager
         setLayout(new BorderLayout());
-        gamePanel = new GamePanel(gameBoard);
-        add(gamePanel, BorderLayout.CENTER);
 
+        gamePanel = new GamePanel();
+        this.add(gamePanel, BorderLayout.CENTER);
+
+        controlPanel = new ControlPanel(this.gamePanel);
+        this.add(controlPanel, BorderLayout.SOUTH);
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    public GamePanel getGamePanel() {
+        return this.gamePanel;
+    }
+
+    public ControlPanel getControlPanel() {
+        return this.controlPanel;
     }
 }

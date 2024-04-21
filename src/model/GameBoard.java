@@ -4,7 +4,16 @@ public class GameBoard {
     // 2 dimensional array
     private Cell[][] grid;
     // the length size of the game board
-    private int size;
+    private int size = 10;
+
+    public GameBoard() {
+        grid = new Cell[this.size][this.size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                grid[i][j] = new Cell(this, i, j);
+            }
+        }
+    }
 
     public GameBoard(int size) {
         this.size = size;
@@ -32,6 +41,7 @@ public class GameBoard {
     public int getSize() {
         return size;
     }
+
     public Cell[][] getGrid() {
         return grid;
     }
@@ -39,7 +49,7 @@ public class GameBoard {
     public void reset() {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
-                this.getGrid()[i][j].setStatus(false);
+                this.getGrid()[i][j].setAlive(false);
             }
         }
     }
