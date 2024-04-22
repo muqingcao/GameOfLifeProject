@@ -1,6 +1,6 @@
 package view;
+import Interface.GameObserver;
 
-import control.ControlPanel;
 import model.GameBoard;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements GameObserver {
     private GameBoard gameBoard;
     private int cellSize;
     public GamePanel() {
@@ -28,8 +28,18 @@ public class GamePanel extends JPanel {
         });
     }
 
+    @Override
+    public void update(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+        repaint();
+    }
+
     public GameBoard getGameBoard() {
         return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
     @Override

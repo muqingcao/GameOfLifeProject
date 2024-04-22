@@ -20,6 +20,7 @@ public class ControlPanel extends JPanel {
 
     private JLabel boardSizeLabel;
     private JTextField boarsSizeField;
+    private JButton resizeButton;
     private JButton startButton;
     private JButton stopButton;
     private JButton resetButton;
@@ -30,6 +31,7 @@ public class ControlPanel extends JPanel {
         this.gamePanel = gamePanel;
         this.boardSizeLabel = new JLabel("Enter board size:");
         this.boarsSizeField = new JTextField(3);
+        this.resizeButton = new JButton("Resize");
         this.startButton = new JButton("Start");
         this.stopButton = new JButton("Stop");
         this.resetButton = new JButton("Reset");
@@ -39,6 +41,7 @@ public class ControlPanel extends JPanel {
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(boardSizeLabel);
         panel.add(boarsSizeField);
+        panel.add(resizeButton);
         panel.add(startButton);
         panel.add(stopButton);
         panel.add(resetButton);
@@ -46,6 +49,7 @@ public class ControlPanel extends JPanel {
         panel.add(resumeButton);
         add(panel);
 
+        resizeButton.addActionListener(e -> resizeGrid());
         startButton.addActionListener(e -> startGame());
         stopButton.addActionListener(e -> stopGame());
         resetButton.addActionListener(e -> resetGame());
@@ -53,19 +57,42 @@ public class ControlPanel extends JPanel {
         resumeButton.addActionListener(e -> resumeGame());
     }
 
+    private void resizeGrid() {
+        String input = boarsSizeField.getText();
+        GameBoard board;
+        if (input.isEmpty()) {
+            board = new GameBoard();
+        }
+        else {
+            int boardSize;
+            try {
+                boardSize = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            board = new GameBoard(boardSize);
+        }
+        this.gamePanel.setGameBoard(board);
+        this.gamePanel.repaint();
+    }
     private void startGame() {
-        int boardSize = Integer.parseInt(boarsSizeField.getText());
-        GameBoard board = new GameBoard(boardSize);
-
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        GameBoard board = new GameBoard(this.gamePanel.getGameBoard().getSize());
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
                 if (this.gamePanel.getGameBoard().getGrid()[i][j].isAlive()) {
                     board.getGrid()[i][j].setAlive(true);
                 }
             }
         }
+        this.gamePanel.setGameBoard(board);
+        this.gamePanel.repaint();
+
         this.gameLogic = new GameLogic(board);
         this.gameLoop = new GameLoop(gameLogic);
+
+        this.gameLogic.addObserver(this.gamePanel);
+        this.gamePanel.setGameBoard(board);
         gameLoop.startGame();
     }
 
