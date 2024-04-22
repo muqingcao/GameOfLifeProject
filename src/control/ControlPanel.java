@@ -3,15 +3,11 @@ package control;
 import model.GameBoard;
 import model.GameLogic;
 import model.GameLoop;
-import view.GameFrame;
 import view.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import static java.awt.AWTEventMulticaster.add;
 
 public class ControlPanel extends JPanel {
     private GamePanel gamePanel;
@@ -23,9 +19,9 @@ public class ControlPanel extends JPanel {
     private JButton resizeButton;
     private JButton startButton;
     private JButton stopButton;
-    private JButton resetButton;
-    private JButton pauseButton;
     private JButton resumeButton;
+    private JButton resetButton;
+    //private JButton pauseButton;
 
     public ControlPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -34,9 +30,9 @@ public class ControlPanel extends JPanel {
         this.resizeButton = new JButton("Resize");
         this.startButton = new JButton("Start");
         this.stopButton = new JButton("Stop");
-        this.resetButton = new JButton("Reset");
-        this.pauseButton = new JButton("Pause");
         this.resumeButton = new JButton("Resume");
+        this.resetButton = new JButton("Reset");
+        //this.pauseButton = new JButton("Pause");
 
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(boardSizeLabel);
@@ -44,17 +40,18 @@ public class ControlPanel extends JPanel {
         panel.add(resizeButton);
         panel.add(startButton);
         panel.add(stopButton);
-        panel.add(resetButton);
-        panel.add(pauseButton);
         panel.add(resumeButton);
+        panel.add(resetButton);
+        //panel.add(pauseButton);
         add(panel);
 
         resizeButton.addActionListener(e -> resizeGrid());
         startButton.addActionListener(e -> startGame());
         stopButton.addActionListener(e -> stopGame());
-        resetButton.addActionListener(e -> resetGame());
-        pauseButton.addActionListener(e -> pauseGame());
         resumeButton.addActionListener(e -> resumeGame());
+        resetButton.addActionListener(e -> resetGame());
+        //pauseButton.addActionListener(e -> pauseGame());
+
     }
 
     private void resizeGrid() {
@@ -76,6 +73,7 @@ public class ControlPanel extends JPanel {
         this.gamePanel.setGameBoard(board);
         this.gamePanel.repaint();
     }
+
     private void startGame() {
         GameBoard board = new GameBoard(this.gamePanel.getGameBoard().getSize());
         for (int i = 0; i < board.getSize(); i++) {
@@ -98,20 +96,26 @@ public class ControlPanel extends JPanel {
 
 
     private void stopGame() {
-        // todo: Stop the game
+        gameLoop.pauseGame();
+    }
+
+    private void resumeGame() {
+        gameLoop.resumeGame();
+        startGame();
     }
 
     private void resetGame() {
-        // todo: reset the game
-    }
+        stopGame();
+        GameBoard board = new GameBoard();
+        this.gamePanel.setGameBoard(board);
+        this.gamePanel.repaint();
 
-    private void pauseGame() {
-        // todo: pause the game
-    }
+        this.gameLogic = new GameLogic(board);
+        this.gameLoop = new GameLoop(gameLogic);
 
-
-    private void resumeGame() {
-        // todo: resume the game
+        this.gameLogic.addObserver(this.gamePanel);
+        this.gamePanel.setGameBoard(board);
+        gameLoop.startGame();
     }
 }
 

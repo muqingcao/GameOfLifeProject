@@ -9,7 +9,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             GameBoard board = new GameBoard();
             GameLogic gameLogic = new GameLogic(board);
-            GameFrame gameFrame = new GameFrame(board, gameLogic);
+            GameFrame gameFrame = new GameFrame();
         });
 
 

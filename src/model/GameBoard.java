@@ -4,7 +4,7 @@ public class GameBoard {
     // 2 dimensional array
     private Cell[][] grid;
     // the length size of the game board
-    private int size = 10;
+    private int size = 50;
 
     public GameBoard() {
         grid = new Cell[this.size][this.size];
@@ -69,5 +69,4 @@ public class GameBoard {
         }
         return stringGird.toString();
     }
-
 }

@@ -30,22 +30,26 @@ public class GameLoop extends Thread {
     @Override
     public void run() {
         while (isStarted) {
-            if (!isPaused) {
-                gameLogic.getNextBoard();
-                gameLogic.notifyObservers();
-                // Check if all cells are either alive or dead
-                if (allCellsAreSame(gameLogic.getNewBoard())
-                        || boardsAreSame(gameLogic.getNewBoard(), gameLogic.getBoard())) {
-                    stopGame();
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            if(isPaused == true){
+                return;
             }
+            gameLogic.getNextBoard();
+            gameLogic.notifyObservers();
+
+            // Check if all cells are either alive or dead
+            if (allCellsAreSame(gameLogic.getNewBoard())
+                    || boardsAreSame(gameLogic.getNewBoard(), gameLogic.getBoard())) {
+                stopGame();
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameLogic.setBoard(gameLogic.getNewBoard());
         }
+
     }
     private boolean allCellsAreSame(GameBoard board) {
         boolean allAlive = true;
@@ -61,7 +65,6 @@ public class GameLoop extends Thread {
                 }
             }
         }
-
         return allAlive || allDead;
     }
 
@@ -76,8 +79,8 @@ public class GameLoop extends Thread {
                 }
             }
         }
-
         return true;
     }
+
 }
 

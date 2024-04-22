@@ -11,21 +11,62 @@ import java.awt.event.MouseEvent;
 public class GamePanel extends JPanel implements GameObserver {
     private GameBoard gameBoard;
     private int cellSize;
+    private boolean isMousePressed = false;
+
     public GamePanel() {
-        // build a gameBoard with fault size 10
+        // build a gameBoard with fault size 50
         this.gameBoard = new GameBoard();
         // window size
-        this.setPreferredSize(new Dimension(600, 600));
-        this.cellSize = 600 / gameBoard.getSize();
+        this.setPreferredSize(new Dimension(800, 800));
+        this.cellSize = 800 / gameBoard.getSize();
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int x = e.getX() / cellSize;
-                int y = e.getY() / cellSize;
-                gameBoard.getGrid()[x][y].setAlive(true);
-                repaint();
+                handleSingleClick(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                isMousePressed = true;
+                handleMouseClick(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                isMousePressed = false;
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (isMousePressed) {
+                    handleMouseClick(e);
+                }
             }
         });
+    }
+
+    private void handleSingleClick(MouseEvent e) {
+        int x = e.getX() / cellSize;
+        int y = e.getY() / cellSize;
+
+        if (isValidCoordinate(x, y)) {
+            gameBoard.getGrid()[x][y].setAlive(true);
+            repaint();
+        }
+    }
+
+    private void handleMouseClick(MouseEvent e) {
+        int x = e.getX() / cellSize;
+        int y = e.getY() / cellSize;
+
+        if (isValidCoordinate(x, y)) {
+            gameBoard.getGrid()[x][y].setAlive(true);
+            repaint();
+        }
+    }
+
+    private boolean isValidCoordinate(int x, int y) {
+        return x >= 0 && x < gameBoard.getGrid().length && y >= 0 && y < gameBoard.getGrid()[0].length;
     }
 
     @Override

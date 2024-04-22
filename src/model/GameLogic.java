@@ -7,8 +7,8 @@ import java.util.List;
 public class GameLogic {
     private GameBoard board;
     private GameBoard newBoard;
-    private GameBoard boardPrev;
-    private GameBoard boardCurr;
+//    private GameBoard boardPrev;
+//    private GameBoard boardCurr;
     private List<GameObserver> observers = new ArrayList<>();
 
     public void addObserver(GameObserver observer) {
@@ -28,7 +28,6 @@ public class GameLogic {
     public GameLogic(GameBoard board){
         // initial game: all cells are die
         this.board = board;
-
     }
 
     // the method is designed for using location to change the cell status
@@ -47,18 +46,22 @@ public class GameLogic {
         newBoard  = nextGen.getNewBoard();
     }
 
-    public void newBoardContinue(){
-        String prev = "null";
-        String curr = this.board.toString();
-        boardPrev = board;
-        while(!prev.equals(curr)){
-            Generation nextGen = new Generation(boardPrev);
-            nextGen.newGeneration();
-            boardCurr  = nextGen.getNewBoard();
-            prev = curr;
-            curr = this.boardCurr.toString();
-            boardPrev = boardCurr;
-        }
+//    public void newBoardContinue(){
+//        String prev = "null";
+//        String curr = this.board.toString();
+//        boardPrev = board;
+//        while(!prev.equals(curr)){
+//            Generation nextGen = new Generation(boardPrev);
+//            nextGen.newGeneration();
+//            boardCurr  = nextGen.getNewBoard();
+//            prev = curr;
+//            curr = this.boardCurr.toString();
+//            boardPrev = boardCurr;
+//        }
+//    }
+
+    public void setBoard(GameBoard newBoard){
+        this.board = newBoard;
     }
 
     public GameBoard getNewBoard(){
@@ -69,11 +72,20 @@ public class GameLogic {
         return board;
     }
 
-    public GameBoard getBoardCurr(){
-        return boardCurr;
+    public void resetBoard(){
+        for(int i = 0; i < board.getSize(); i++){
+            for(int j = 0; j < board.getSize(); j++){
+                board.getGrid()[i][j].setAlive(false);
+            }
+        }
     }
 
-    public GameBoard getBoardPrev(){
-        return boardPrev;
-    }
+
+//    public GameBoard getBoardCurr(){
+//        return boardCurr;
+//    }
+//
+//    public GameBoard getBoardPrev(){
+//        return boardPrev;
+//    }
 }

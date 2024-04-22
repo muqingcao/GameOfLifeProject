@@ -1,16 +1,14 @@
 package view;
-
 import javax.swing.*;
 import java.awt.*;
 
 import control.ControlPanel;
-import model.*;
 
 public class GameFrame extends JFrame {
     private GamePanel gamePanel;
     private ControlPanel controlPanel;
 
-    public GameFrame(GameBoard gameBoard, GameLogic gameLogic) {
+    public GameFrame() {
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //sets the layout manager

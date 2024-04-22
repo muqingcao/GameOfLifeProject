@@ -1,7 +1,6 @@
 package model;
 
 public class Generation {
-
     // old game board
     private Cell[][] oldGird;
     private int size;
@@ -49,7 +48,6 @@ public class Generation {
                 // situation 3: a new cell born in an empty cell that has exactly 3 neighbours
                 else if(neighbours == 3 && oldGird[i][j].isAlive() == false){
                     newGird[i][j].switchState();
-                    //System.out.println("i" + i + "\t,"+ "j: "+j);
                 }
             }
         }
