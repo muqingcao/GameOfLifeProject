@@ -52,6 +52,7 @@ public class Generation {
             }
         }
     }
+
     public GameBoard getNewBoard(){
         nextGird = new GameBoard(this.newGird);
         return nextGird;

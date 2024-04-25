@@ -9,30 +9,43 @@ public class GameLoop extends Thread {
     public GameLoop(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
     }
+
+    public boolean getIsStarted () {
+        return this.isStarted;
+    }
+    public boolean getIsPaused () {
+        return this.isPaused;
+    }
+
     public void startGame() {
-        isStarted = true;
-        // starts the execution of the thread's run() method asynchronously
-        start();
+        if (!isStarted) {
+            isStarted = true;
+            isPaused = false;
+            // starts the execution of the thread's run() method asynchronously
+            start();
+        }
+        else return;
     }
 
     public void stopGame() {
-        isStarted = false;
-    }
-
-    public void pauseGame() {
-        isPaused = true;
+        //isStarted = false;
+        if (isStarted) {
+            isStarted = false;
+        }
+        else return;
     }
 
     public void resumeGame() {
-        isPaused = false;
+        if (!isStarted) {
+            isStarted = true;
+            isPaused = false;
+        }
+        else return;
     }
 
     @Override
     public void run() {
-        while (isStarted) {
-            if(isPaused == true){
-                return;
-            }
+        while (isStarted && !Thread.currentThread().isInterrupted()) {
             gameLogic.getNextBoard();
             gameLogic.notifyObservers();
 
@@ -40,17 +53,20 @@ public class GameLoop extends Thread {
             if (allCellsAreSame(gameLogic.getNewBoard())
                     || boardsAreSame(gameLogic.getNewBoard(), gameLogic.getBoard())) {
                 stopGame();
+                interrupt();
             }
 
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Restore interrupted status
+                Thread.currentThread().interrupt();
             }
             gameLogic.setBoard(gameLogic.getNewBoard());
         }
-
     }
+
+
     private boolean allCellsAreSame(GameBoard board) {
         boolean allAlive = true;
         boolean allDead = true;
@@ -81,6 +97,5 @@ public class GameLoop extends Thread {
         }
         return true;
     }
-
 }
 

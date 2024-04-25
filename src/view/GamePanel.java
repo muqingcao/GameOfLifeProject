@@ -19,6 +19,7 @@ public class GamePanel extends JPanel implements GameObserver {
         // window size
         this.setPreferredSize(new Dimension(800, 800));
         this.cellSize = 800 / gameBoard.getSize();
+
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

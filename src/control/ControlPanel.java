@@ -75,6 +75,9 @@ public class ControlPanel extends JPanel {
     }
 
     private void startGame() {
+        if (gameLoop != null && gameLoop.getIsStarted()) {
+            return;
+        }
         GameBoard board = new GameBoard(this.gamePanel.getGameBoard().getSize());
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
@@ -96,12 +99,19 @@ public class ControlPanel extends JPanel {
 
 
     private void stopGame() {
-        gameLoop.pauseGame();
+        gameLoop.stopGame();
     }
 
     private void resumeGame() {
-        gameLoop.resumeGame();
-        startGame();
+        if (!gameLoop.getIsStarted()) {
+            GameBoard board = this.gamePanel.getGameBoard();
+            this.gameLogic = new GameLogic(board);
+            this.gameLoop = new GameLoop(gameLogic);
+
+            this.gameLogic.addObserver(this.gamePanel);
+            gameLoop.startGame();
+        }
+        else return;
     }
 
     private void resetGame() {
@@ -115,7 +125,6 @@ public class ControlPanel extends JPanel {
 
         this.gameLogic.addObserver(this.gamePanel);
         this.gamePanel.setGameBoard(board);
-        gameLoop.startGame();
     }
 }
 

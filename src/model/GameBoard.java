@@ -46,14 +46,6 @@ public class GameBoard {
         return grid;
     }
 
-    public void reset() {
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                this.getGrid()[i][j].setAlive(false);
-            }
-        }
-    }
-
     public String toString(){
         StringBuilder stringGird = new StringBuilder();
         for(int i = 0; i < size; i++){
