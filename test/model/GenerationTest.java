@@ -1,3 +1,9 @@
+/**
+ * The {@code GenerationTest} class contains unit tests for the {@code Generation} class.
+ * It tests the various functionalities of the {@code Generation} class, including
+ * generating a new game board based on the rules of the Game of Life and
+ * retrieving the size of the game board.
+ */
 package model;
 
 import org.junit.Before;
@@ -9,6 +15,7 @@ public class GenerationTest {
     private Generation generation;
     private GameBoard board1;
 
+    // Cells representing the initial state of the game board
     private Cell c1 = new Cell(board1,0,0);
     private Cell c2 =new Cell(board1,0,1);
     private Cell c3 =new Cell(board1,0,2);
@@ -28,7 +35,6 @@ public class GenerationTest {
 
     @Before
     public void setUp() {
-        // Set up a GameBoard with a known initial state for testing
         c10.switchState();
         c11.switchState();
         c12.switchState();
@@ -40,18 +46,18 @@ public class GenerationTest {
         };
         board1 = new GameBoard(initialGrid);
 
-        // Create a Generation instance with the initial board
         generation = new Generation(board1);
     }
 
-    // check if the method newGeneration() can simulate the correct pattern
+    /**
+     * Tests the {@code newGeneration()} method to ensure it generates a new board
+     * based on the Game of Life rules.
+     */
     @Test
     public void testNewGeneration() {
-        // Perform a new generation step
         generation.newGeneration();
         GameBoard newBoard = generation.getNewBoard();
 
-        // Assert specific conditions after one generation
         String newBoardString = newBoard.toString();
         String expected = "0\t0\t0\t0\t\n" +
                 "0\t0\t1\t0\t\n" +
@@ -61,7 +67,9 @@ public class GenerationTest {
 
     }
 
-    // check if the method can get size correctly
+    /**
+     * Tests the {@code getSize()} method to ensure it returns the correct size of the board.
+     */
     @Test
     public void testGetSize() {
         assertEquals(4, generation.getSize());

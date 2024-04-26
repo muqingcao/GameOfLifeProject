@@ -1,10 +1,13 @@
+/**
+ * The {@code GamePanelTest} class contains unit tests for the {@code GamePanel} class.
+ * It tests the initialization, update method, and mouse click functionality of the {@code GamePanel} class.
+ */
 package view;
 
 import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -18,6 +21,9 @@ public class GamePanelTest {
         gamePanel = new GamePanel();
     }
 
+    /**
+     * Tests the initialization of the {@code GamePanel} class.
+     */
     @Test
     public void testInitialization() {
         assertNotNull(gamePanel);
@@ -27,7 +33,9 @@ public class GamePanelTest {
         assertEquals(800, gamePanel.getPreferredSize().height);
     }
 
-    // check if the update method works
+    /**
+     * Tests the update method of the {@code GamePanel} class.
+     */
     @Test
     public void testUpdate() {
         GameBoard updatedBoard = new GameBoard(15); // Create a new board with size 15
@@ -35,16 +43,16 @@ public class GamePanelTest {
         assertEquals(updatedBoard, gamePanel.getGameBoard());
     }
 
-    // check if mouseClick works
+    /**
+     * Tests the mouse click functionality of the {@code GamePanel} class.
+     */
     @Test
     public void testMouseClick() {
-        // Simulate a mouse click on a cell
         Point clickPoint = new Point(50, 50); // Click at coordinates (50,50)
         gamePanel.getMouseListeners()[0].mouseClicked(new MouseEvent(
                 gamePanel, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(),
                 0, clickPoint.x, clickPoint.y, 1, false));
 
-        // Check if the corresponding cell in the GameBoard is set to alive
         int cellSize = 800 / gamePanel.getGameBoard().getSize();
         int clickedCellX = clickPoint.x / cellSize;
         int clickedCellY = clickPoint.y / cellSize;

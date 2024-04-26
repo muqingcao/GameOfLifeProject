@@ -4,44 +4,24 @@ import view.GameFrame;
 
 import javax.swing.*;
 
+/**
+ * The {@code Main} class is the entry point for the Game of Life application.
+ * It initializes the game board, game logic, and the main application window.
+ */
 public class Main {
+
+    /**
+     * The main method of the application.
+     * Initializes the game board, game logic, and the main application window on the Event Dispatch Thread (EDT).
+     *
+     * @param args the command-line arguments (not used in this application)
+     */
     public static void main(String[] args) {
+        // Schedule the GUI code to be executed on the EDT
         SwingUtilities.invokeLater(() -> {
             GameBoard board = new GameBoard();
             GameLogic gameLogic = new GameLogic(board);
             GameFrame gameFrame = new GameFrame();
         });
-
-
-
-        /*
-        System.out.print("---game one ---\n");
-        GameBoard board = new GameBoard(8);
-        GameLogic game = new GameLogic(board);
-
-        game.addCell(1, 1);
-        game.addCell(1, 2);
-        game.addCell(1, 3);
-        System.out.print(game.getBoard().toString());
-        System.out.print("------\n");
-        game.getNextBoard();
-        System.out.print(game.getNewBoard().toString());
-
-        System.out.print("---game two ---\n\n");
-
-        GameBoard board1 = new GameBoard(8);
-        GameLogic game1 = new GameLogic(board1);
-
-        game1.addCell(1, 1);
-        game1.addCell(1, 2);
-        game1.addCell(1, 3);
-        game1.addCell(1, 4);
-        System.out.print(game1.getBoard().toString());
-        System.out.print("------\n");
-        game1.getNextBoard();
-        System.out.print(game1.getNewBoard().toString());
-        // print every generation
-        game1.newBoardContinue();
-        */
     }
 }

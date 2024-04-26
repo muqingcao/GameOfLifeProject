@@ -8,7 +8,11 @@ import view.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * ControlPanel class represents the control panel for the Game of Life application.
+ * It provides user interface components to interact with the game, such as resizing the grid,
+ * starting, stopping, resuming, and resetting the game.
+ */
 public class ControlPanel extends JPanel {
     private GamePanel gamePanel;
     private GameLogic gameLogic;
@@ -21,8 +25,12 @@ public class ControlPanel extends JPanel {
     private JButton stopButton;
     private JButton resumeButton;
     private JButton resetButton;
-    //private JButton pauseButton;
 
+    /**
+     * Constructs a new ControlPanel with the specified GamePanel.
+     *
+     * @param gamePanel the GamePanel to associate with this ControlPanel
+     */
     public ControlPanel(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.boardSizeLabel = new JLabel("Enter board size:");
@@ -32,7 +40,6 @@ public class ControlPanel extends JPanel {
         this.stopButton = new JButton("Stop");
         this.resumeButton = new JButton("Resume");
         this.resetButton = new JButton("Reset");
-        //this.pauseButton = new JButton("Pause");
 
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(boardSizeLabel);
@@ -42,7 +49,6 @@ public class ControlPanel extends JPanel {
         panel.add(stopButton);
         panel.add(resumeButton);
         panel.add(resetButton);
-        //panel.add(pauseButton);
         add(panel);
 
         resizeButton.addActionListener(e -> resizeGrid());
@@ -50,11 +56,26 @@ public class ControlPanel extends JPanel {
         stopButton.addActionListener(e -> stopGame());
         resumeButton.addActionListener(e -> resumeGame());
         resetButton.addActionListener(e -> resetGame());
-        //pauseButton.addActionListener(e -> pauseGame());
-
     }
 
-    private void resizeGrid() {
+    public JTextField getBoarsSizeField() {
+        return boarsSizeField;
+    }
+
+    public GameLoop getGameLoop() {
+        return gameLoop;
+    }
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    /**
+     * Resizes the game grid based on the input from the user.
+     * If the input is empty, a default-sized board is created.
+     * If the input is invalid, an error message is displayed.
+     */
+    public void resizeGrid() {
         String input = boarsSizeField.getText();
         GameBoard board;
         if (input.isEmpty()) {
@@ -74,7 +95,10 @@ public class ControlPanel extends JPanel {
         this.gamePanel.repaint();
     }
 
-    private void startGame() {
+    /**
+     * Starts the game by initializing the game logic and game loop.
+     */
+    public void startGame() {
         if (gameLoop != null && gameLoop.getIsStarted()) {
             return;
         }
@@ -97,12 +121,17 @@ public class ControlPanel extends JPanel {
         gameLoop.startGame();
     }
 
-
-    private void stopGame() {
+    /**
+     * Stops the game loop.
+     */
+    public void stopGame() {
         gameLoop.stopGame();
     }
 
-    private void resumeGame() {
+    /**
+     * Resumes the game if it's not already running.
+     */
+    public void resumeGame() {
         if (!gameLoop.getIsStarted()) {
             GameBoard board = this.gamePanel.getGameBoard();
             this.gameLogic = new GameLogic(board);
@@ -114,7 +143,10 @@ public class ControlPanel extends JPanel {
         else return;
     }
 
-    private void resetGame() {
+    /**
+     * Resets the game by stopping the game loop and creating a new game board.
+     */
+    public void resetGame() {
         stopGame();
         GameBoard board = new GameBoard();
         this.gamePanel.setGameBoard(board);
